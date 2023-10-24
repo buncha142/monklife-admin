@@ -35,7 +35,7 @@ class NtfySend extends Command
             $body = $ntfy->body ? $ntfy->body  : '';
             $passenger = $ntfy->passenger ? 'ผู้รับบุญ: ' . implode(",", $ntfy->passenger) : '';
             if ($ntfy->image) {
-                $line = $line->imageUrl(url($ntfy->image));
+                $line = $line->imageUrl(public_path().'/storage/'.$ntfy->image);
             }
             if (!$body && !$passenger) {
                 $line->send('
