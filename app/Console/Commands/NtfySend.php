@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\NTFY\Ntfy;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Phattarachai\LineNotify\Line;
 
 class NtfySend extends Command
@@ -28,14 +29,14 @@ class NtfySend extends Command
      */
     public function handle()
     {
-        $ntfy = Ntfy::where('published_at', '=', Carbon::now()->format('Y-m-d H:i'))->actived()->first();
+        $ntfy = Ntfy::where('published_at', '=', Carbon::now())->actived()->first();
 
         if ($ntfy) {
             $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
             $body = $ntfy->body ? $ntfy->body  : '';
             $passenger = $ntfy->passenger ? 'ผู้รับบุญ: ' . implode(",", $ntfy->passenger) : '';
             if ($ntfy->image) {
-                $line = $line->imageUrl(public_path().'/storage/'.$ntfy->image);
+                $line = $line->imageUrl(url(Storage::url($ntfy->image)));
             }
             if (!$body && !$passenger) {
                 $line->send('
