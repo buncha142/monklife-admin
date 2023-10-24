@@ -29,7 +29,7 @@ class NtfySend extends Command
      */
     public function handle()
     {
-        $ntfy = Ntfy::where('published_at', '=', Carbon::now())->actived()->first();
+        $ntfy = Ntfy::whereTime('published_at', '=', Carbon::now())->actived()->first();
 
         if ($ntfy) {
             $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
