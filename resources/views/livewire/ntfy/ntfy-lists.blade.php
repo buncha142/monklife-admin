@@ -62,7 +62,7 @@
                                                     <font class=" font-semibold text-blue-600">ผู้รับบุญ :</font>
                                                     {{ implode(', ', $ntfy->passenger) }}
                                                 </p>
-                                                <img class=" h-auto w-auto {{ empty($ntfy->image) ? 'hidden' : '' }}" src="{{ $ntfy->image }}"
+                                                <img class=" h-auto w-auto {{ empty($ntfy->image) ? 'hidden' : '' }}" src="{{ '/storage/'.$ntfy->image }}"
                                                     alt="">
 
 
