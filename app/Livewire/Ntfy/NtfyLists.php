@@ -4,6 +4,7 @@ namespace App\Livewire\Ntfy;
 
 use App\Models\NTFY\Ntfy;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Phattarachai\LineNotify\Line;
 
@@ -25,7 +26,7 @@ class NtfyLists extends Component
         $body = $ntfy->body ? $ntfy->body  : '';
         $passenger = $ntfy->passenger ? 'ผู้รับบุญ: '.implode(",", $ntfy->passenger) : '';
         if ($ntfy->image) {
-            $line = $line->imageUrl(public_path().'/storage/'.$ntfy->image);
+            $line = $line->imageUrl(url(Storage::url($ntfy->image)));
         }
         if (!$body&&!$passenger) {
         $line->send('
