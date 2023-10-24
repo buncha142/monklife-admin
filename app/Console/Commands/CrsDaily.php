@@ -36,7 +36,7 @@ class CrsDaily extends Command
             $i = 0;
             $line->send(
                 '
-วันนี้ วัน' . Carbon::today()->thaidate('D') . ' ที่' . Carbon::today()->thaidate('j M y') . '
+วันนี้ วัน' . Carbon::today()->thaidate('l') . ' ที่' . Carbon::today()->thaidate('j M y') . '
 มีการจองรถ ' . Lists::where('start_date', '=', $today)->count() . ' รายการ'
             );
 
