@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:ntfy-send')->everyMinute();
-        $schedule->command('app:crs-daily')->everyMinute();
+        $schedule->command('app:crs-daily')->dailyAt('06:00');
     }
 
     /**
