@@ -30,7 +30,7 @@ class CrsDaily extends Command
     {
         $today = Carbon::today()->format('Y-m-d');
         $lists = Lists::where('start_date', '=', $today)->orderBy('start_time', 'asc')->get();
-        $line = new Line('wobn88LKGB9vVcI8AxDmQiIRi3uT1qEOUAhRidAk3gH');
+        $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
 
         if (count($lists) != 0) {
             $i = 0;

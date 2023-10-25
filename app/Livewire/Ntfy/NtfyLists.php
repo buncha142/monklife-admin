@@ -21,6 +21,40 @@ class NtfyLists extends Component
 
     public function line($id)
     {
+
+//         $ntfy = Ntfy::where('id','=', '4')->actived()->first();
+
+//         //dd($ntfy);
+//         if ($ntfy) {
+//             $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
+//             $body = $ntfy->body ? $ntfy->body  : '';
+//             $passenger = $ntfy->passenger ? 'ผู้รับบุญ: ' . implode(",", $ntfy->passenger) : '';
+//             if ($ntfy->image) {
+//                 $line = $line->imageUrl(url(Storage::url($ntfy->image)));
+//             }
+//             if (!$body && empty($passenger)) {
+//                 $line->send('
+// ' . $ntfy->title);
+//             } else if (!$body) {
+//                 $line->send('
+// ' . $ntfy->title . '
+// ผู้รับบุญ: '.$passenger);
+//             } else if (!$passenger) {
+//                 $line->send('
+// ' . $ntfy->title . '
+
+// ' . $ntfy->body);
+//             } else {
+//                 $line->send('
+// ' . $ntfy->title . '
+
+// ' . $ntfy->body . '
+
+// ผู้รับบุญ: ' . implode(",", $ntfy->passenger));
+//             }
+//         }
+
+
         $ntfy = Ntfy::findOrFail($id);
         $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
         $body = $ntfy->body ? $ntfy->body  : '';
@@ -48,6 +82,6 @@ class NtfyLists extends Component
 
 ผู้รับบุญ: '.implode(",", $ntfy->passenger));
         }
-    }
+   }
 
 }
