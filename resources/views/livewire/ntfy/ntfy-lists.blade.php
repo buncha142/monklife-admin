@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="rounded-full bg-blue-500 border-white border-4 w-8 h-8 absolute  -translate-y-4 sm:translate-y-0 transform -translate-x-1/2 flex items-center justify-center">
+                                        class="rounded-full bg-blue-500 border-white border-4 w-8 h-8 absolute  -translate-y-4 sm:translate-y-0 transform -translate-x-1 flex items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
