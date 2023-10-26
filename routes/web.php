@@ -6,6 +6,8 @@ use App\Livewire\Crs\CrsCreate;
 use App\Livewire\Crs\CrsEdit;
 use App\Livewire\Crs\CrsLists;
 use App\Livewire\Member\MemberLists;
+use App\Livewire\Ntfy\NtfyCreate;
+use App\Livewire\Ntfy\NtfyEdit;
 use App\Livewire\Ntfy\NtfyLists;
 use App\Livewire\User\UserEdit;
 use App\Livewire\User\UserEditPassword;
@@ -45,6 +47,11 @@ Route::group(['middleware' => ['auth', 'role:Admin|Member', 'permission:จอ�
 
 Route::group(['middleware' => ['auth', 'role:Admin|Member', 'permission:แจ้งเตือน']], function() {
     Route::get('/ntfy', NtfyLists::class)->name('ntfy-lists');
+    Route::get('/ntfy-create', NtfyCreate::class)->name('ntfy-create');
+ });
+Route::group(['middleware' => ['auth', 'role:Admin', 'permission:แจ้งเตือน']], function() {
+    Route::get('/ntfy-create', NtfyCreate::class)->name('ntfy-create');
+    Route::get('/ntfy-edit/{id}', NtfyEdit::class)->name('ntfy-edit');
  });
 
 

@@ -20,7 +20,6 @@ class Ntfy extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'image' => 'array',
         'passenger' => 'array',
         'published_at' => 'datetime:Y-m-d H:i',
         'is_active' => 'boolean',
@@ -48,7 +47,7 @@ class Ntfy extends Model
 
     public function scopePublished($query)
     {
-        $query->where('published_at', '>=', Carbon::now())->orderBy('published_at', 'ASC');
+        $query->whereDate('published_at', '>=', Carbon::now())->orderBy('published_at', 'ASC');
     }
 
     protected static function boot()
@@ -58,6 +57,12 @@ class Ntfy extends Model
         /** @var Model $model */
         static::updating(function ($model) {
             if ($model->isDirty('image') && ($model->getOriginal('image') !== null)) {
+                Storage::disk('public')->delete($model->getOriginal('image'));
+            }
+        });
+
+        static::deleting(function ($model) {
+            if ($model->getOriginal('image') !== null) {
                 Storage::disk('public')->delete($model->getOriginal('image'));
             }
         });

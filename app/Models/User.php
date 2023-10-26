@@ -101,5 +101,11 @@ class User extends Authenticatable implements FilamentUser
                 Storage::disk('public')->delete($model->getOriginal('avatar'));
             }
         });
+
+        static::deleting(function ($model) {
+            if ($model->getOriginal('avatar') !== null) {
+                Storage::disk('public')->delete($model->getOriginal('avatar'));
+            }
+        });
     }
 }

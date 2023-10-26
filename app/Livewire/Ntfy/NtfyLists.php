@@ -6,6 +6,7 @@ use App\Models\NTFY\Ntfy;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 use Phattarachai\LineNotify\Line;
 
 
@@ -21,15 +22,15 @@ class NtfyLists extends Component
         );
     }
 
+    public function delete($id)
+    {
+        Ntfy::findOrFail($id)->delete();
+        Toaster::error('ลบเรียบร้อย !');
+    }
+
     public function line($id)
     {
         $ntfy = Ntfy::findOrFail($id);
-
-        //$ntfy = Ntfy::whereTime('published_at', '=', Carbon::now()->format('H:i'))->actived()->first();
-
-        // dd($ntfy);
-        // dd($ntfy->whereTime('published_at', '=', Carbon::now()->format('H:m'))->first());
-
         $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
         $body = $ntfy->body ? '
 '.$ntfy->body : '';

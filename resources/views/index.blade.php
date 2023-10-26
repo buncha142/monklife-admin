@@ -64,7 +64,7 @@
         <div class="flex flex-wrap items-start justify-center gap-1 sm:gap-3">
             <!-- เจ้าหน้าที่ -->
             @can('สมาชิก')
-                <a href="/members"
+                <a href="{{ route('member-lists') }}"
                     class="inline-flex items-center justify-start w-full min-w-full my-3 bg-gray-200 rounded-lg shadow sm:min-w-0 max-h-24 sm:w-64 md:w-3/12 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300">
                     <div class="block w-24 h-24 min-w-max">
                         <img class="object-cover w-24 h-24 rounded-l-lg" src="/image-logo/member/apple-touch-icon.png"
@@ -80,7 +80,7 @@
             <!-- /เจ้าหน้าที่ -->
             <!-- จองรถ -->
             @can('จองรถ')
-                <a href="/car"
+                <a href="{{ route('crs-lists') }}"
                     class="inline-flex items-center justify-start w-full min-w-full my-3 bg-gray-200 rounded-lg shadow sm:min-w-0 max-h-24 sm:w-64 md:w-3/12 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300">
                     <div class="block w-24 h-24 min-w-max">
                         <img class="object-cover w-24 h-24 rounded-l-lg" src="/image-logo/crs/apple-touch-icon.png"

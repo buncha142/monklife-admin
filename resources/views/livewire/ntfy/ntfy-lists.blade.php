@@ -14,24 +14,19 @@
                     class="text-xl font-semibold"></span></p>
             <p class="text-left text-gray-500 ">หมายเหตุ: หากต้องการเพิ่มรายการกรุณาติดต่อ Admin</p>
         </div>
-
         <div class="min-h-screen   flex flex-row justify-center ">
             <div class="py-3 sm:max-w-xl sm:mx-auto w-full px-2 sm:px-0">
-
                 <div class="relative text-gray-700 antialiased text-sm font-semibold">
-
                     <!-- Vertical bar running through middle -->
                     <div class="hidden sm:block w-1 bg-blue-300 absolute h-full  transform -translate-x-1/2"></div>
-
                     <div class="space-y-4">
                         @foreach ($ntfies as $ntfy)
                             <!-- Right section, set by justify-end and sm:pl-8 -->
-                            <div class="mt-6 sm:mt-0">
+                            <div wire:key="{{ $ntfy->id }}" class="mt-6 sm:mt-0">
                                 <div class="flex flex-col sm:flex-row items-center">
                                     <div class="flex justify-start w-full mx-auto items-center">
                                         <div class="w-full sm:pl-8">
                                             <div class="p-4 bg-white rounded shadow">
-
                                                 <div class="inline-flex items-baseline ">
                                                     <time
                                                         class="mb-1 text-sm font-normal leading-none text-blue-600">{{ $ntfy->published_at->thaidate('l j M y') }}
@@ -62,15 +57,22 @@
                                                     <font class=" font-semibold text-blue-600">ผู้รับบุญ :</font>
                                                     {{ implode(', ', $ntfy->passenger) }}
                                                 </p>
-                                                <img class=" h-auto w-auto {{ empty($ntfy->image) ? 'hidden' : '' }}" src="{{ Storage::url($ntfy->image) }}"
-                                                    alt="">
+                                                <img class=" h-auto w-auto"
+                                                    src="{{ Storage::url($ntfy->image) }}" alt="">
 
-
-                                                <span wire:click="line({{ $ntfy->id }})"
-                                                    class="bg-green-300 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded cursor-pointer"
-                                                    onclick="return confirm('{{ __('ยืนยันการส่งไลน์ !') }}') || event.stopImmediatePropagation()"><i
-                                                        class="text-green-800 fab fa-line"></i> ส่งไลน์ &nbsp; ->
-
+                                                @role('Admin')
+                                                    <div class="inline-flex">
+                                                        <x-icon-edit href="{{ route('ntfy-edit', $ntfy->id) }}" />
+                                                        <x-icon-delete wire:click="delete({{ $ntfy->id }})"
+                                                            class="font-medium mr-2 text-red-600 cursor-pointer"
+                                                            onclick="return confirm('{{ __('ยืนยันการลบ !') }}') || event.stopImmediatePropagation()" />
+                                                        <span wire:click="line({{ $ntfy->id }})"
+                                                            class="bg-green-300 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded cursor-pointer"
+                                                            onclick="return confirm('{{ __('ยืนยันการส่งไลน์ !') }}') || event.stopImmediatePropagation()"><i
+                                                                class="text-green-800 fab fa-line"></i> ส่งไลน์ &nbsp;
+                                                            -></span>
+                                                    </div>
+                                                @endrole
                                             </div>
                                         </div>
                                     </div>

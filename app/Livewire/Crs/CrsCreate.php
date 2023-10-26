@@ -18,7 +18,7 @@ class CrsCreate extends Component
 {
     public $cars;
     public $dirvers;
-    public $users;
+    public $users = [];
     public $passenger = [];
 
     #[Rule('required|max:255')]

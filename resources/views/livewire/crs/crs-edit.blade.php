@@ -10,7 +10,7 @@
         <!-- Content -->
         <x-auth-card>
             <x-slot name="logo">
-                <h1 class="text-xl text-blue-800 mt-3">เพิ่มรายการจองรถ</h1>
+                <h1 class="text-xl text-blue-800 mt-3">แก้ไขรายการจองรถ</h1>
             </x-slot>
             <form wire:submit.prevent="save" class=" pb-5">
                 @csrf
