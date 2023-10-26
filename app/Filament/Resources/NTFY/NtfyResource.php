@@ -65,7 +65,7 @@ class NtfyResource extends Resource
                                         '4:3',
                                         '1:1',
                                     ])
-                                    ->directory('image-ntfy')
+                                    ->directory('ntfy-image')
                                     ->label('ภาพ(ถ้ามี)')
                                     ->columnSpanFull(),
 

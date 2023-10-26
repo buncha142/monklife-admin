@@ -48,8 +48,8 @@ class NtfyCreate extends Component
         // dd($this->image);
         $this->validate();
         if (!empty($this->image)) {
-            Facades\Storage::put('public/image-ntfy', $this->image);
-            $this->image = $this->image->store('image-ntfy');
+            Facades\Storage::put('public/ntfy-image', $this->image);
+            $this->image = $this->image->store('ntfy-image');
         }
         Models\NTFY\Ntfy::create($this->all());
         Toaster::success('เพิ่มรายการเรียบร้อย !');
