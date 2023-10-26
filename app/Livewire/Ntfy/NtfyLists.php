@@ -31,7 +31,7 @@ class NtfyLists extends Component
     public function line($id)
     {
         $ntfy = Ntfy::findOrFail($id);
-        $line = new Line('wobn88LKGB9vVcI8AxDmQiIRi3uT1qEOUAhRidAk3gH');
+        $line = new Line('5y5hRLWkK3qqd4iKgkU1fODQXStIUySXoaiSlFdAyek');
         $body = $ntfy->body ? '
 '.$ntfy->body : '';
         $passenger = $ntfy->passenger ? '

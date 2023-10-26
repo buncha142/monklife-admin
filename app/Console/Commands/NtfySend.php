@@ -31,7 +31,7 @@ class NtfySend extends Command
     {
         $ntfy = Ntfy::whereTime('published_at', '=', Carbon::now()->format('H:i'))->actived()->first();
         if ($ntfy) {
-            $line = new Line('wobn88LKGB9vVcI8AxDmQiIRi3uT1qEOUAhRidAk3gH');
+            $line = new Line('5y5hRLWkK3qqd4iKgkU1fODQXStIUySXoaiSlFdAyek');
             $body = $ntfy->body ? '
 ' . $ntfy->body : '';
             $passenger = $ntfy->passenger ? '
