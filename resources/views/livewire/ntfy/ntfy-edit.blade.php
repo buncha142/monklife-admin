@@ -26,10 +26,10 @@
                 </div>
                 <!-- รายละเอียดเพิ่มเติม -->
                 <div class="mt-2">
-                    <x-label for="car_id" :value="__('รายละเอียดเพิ่มเติม(ถ้ามี)')" />
-                    <x-input-textarea id="title" class="block mt-1 w-full" wire:model="title" type="text"
+                    <x-label for="body" :value="__('รายละเอียดเพิ่มเติม(ถ้ามี)')" />
+                    <x-input-textarea id="body" class="block mt-1 w-full" wire:model="body" type="text"
                         name="title" />
-                    <x-input-error-default for="car_id" />
+                    <x-input-error-default for="body" />
 
                 </div>
 
