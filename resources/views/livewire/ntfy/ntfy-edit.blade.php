@@ -92,11 +92,11 @@
                 <x-input-error-default for="image" />
                 @if($photo&&!$image)
                 <div class="relative block">
-                  <img class="object-cover mx-auto rounded-lg h-auto max-w-full " src="{{ Storage::url($photo) }}" alt="Avatar">
+                  <img class="object-cover mx-auto rounded-lg h-auto max-w-full " src="{{ Storage::url($photo) }}" alt="">
                 </div>
                 @elseif($image)
                 <div class="relative block">
-                  <img class="object-cover mx-auto rounded-lg h-auto max-w-full " src="{{ $image->temporaryUrl() }}" alt="Avatar">
+                  <img class="object-cover mx-auto rounded-lg h-auto max-w-full " src="{{ $image->temporaryUrl() }}" alt="">
                 </div>
                 @endif
 
