@@ -20,8 +20,9 @@ class Ntfy extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'image' => 'array',
         'passenger' => 'array',
-        'published_at' => 'datetime',
+        'published_at' => 'datetime:Y-m-d H:i',
         'is_active' => 'boolean',
     ];
 

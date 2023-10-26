@@ -24,20 +24,20 @@ class NtfyLists extends Component
     public function line($id)
     {
         $ntfy = Ntfy::findOrFail($id);
-        dd(implode(null,$ntfy->image)==null);
+
+        //$ntfy = Ntfy::whereTime('published_at', '=', Carbon::now()->format('H:i'))->actived()->first();
+
+        // dd($ntfy);
+        // dd($ntfy->whereTime('published_at', '=', Carbon::now()->format('H:m'))->first());
+
         $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
         $body = $ntfy->body ? '
 '.$ntfy->body : '';
         $passenger = $ntfy->passenger ? '
 ผู้รับบุญ: '.implode(",", $ntfy->passenger) : '';
-
         if (!empty($ntfy->image)) {
             $line = $line->imageUrl(url(Storage::url($ntfy->image)));
         }
-
-
-        $line->send('
-'.$ntfy->title.$body.$passenger);
-
+$line->send(' '.$ntfy->title.$body.$passenger);
     }
 }
