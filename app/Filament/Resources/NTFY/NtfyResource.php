@@ -111,6 +111,11 @@ class NtfyResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->groups([
+            Tables\Grouping\Group::make('published_at')->label('วันแจ้งเตือน')
+                    ->date(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
