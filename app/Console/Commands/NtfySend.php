@@ -29,17 +29,22 @@ class NtfySend extends Command
      */
     public function handle()
     {
-        $ntfy = Ntfy::whereTime('published_at', '=', Carbon::now()->format('H:i'))->actived()->first();
-        if ($ntfy) {
-            $line = new Line('5y5hRLWkK3qqd4iKgkU1fODQXStIUySXoaiSlFdAyek');
-            $body = $ntfy->body ? '
-' . $ntfy->body : '';
-            $passenger = $ntfy->passenger ? '
-ผู้รับบุญ: ' . implode(",", $ntfy->passenger) : '';
-            if (!empty($ntfy->image)) {
-                $line = $line->imageUrl(url(Storage::url($ntfy->image)));
+        $date = Carbon::now()->format('Y-m-d');
+        $time = Carbon::now()->format('H:i');
+        $ntfys = Ntfy::whereDate('published_at', '=', $date)->whereTime('published_at', '=', $time)->actived()->get();
+        $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
+
+        if (count($ntfys) != 0) {
+            foreach ($ntfys as $ntfy) {
+                $body = $ntfy->body ? '
+    ' . $ntfy->body : '';
+                $passenger = $ntfy->passenger ? '
+    ผู้รับบุญ: ' . implode(",", $ntfy->passenger) : '';
+                if (!empty($ntfy->image)) {
+                    $lineSend = $line->imageUrl(url(Storage::url($ntfy->image)));
+                }
+                $lineSend->send(' ' . $ntfy->title . $body . $passenger);
             }
-            $line->send(' ' . $ntfy->title . $body . $passenger);
         }
         return Command::SUCCESS;
     }
