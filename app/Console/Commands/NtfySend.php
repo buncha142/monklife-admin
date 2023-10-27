@@ -35,7 +35,7 @@ class NtfySend extends Command
 
         if (count($ntfys) != 0) {
             foreach ($ntfys as $ntfy) {
-                $line = new Line('lA78gCjQa6wv24JuWBGl603IFt1AhDcM7MDMHIDuIsp');
+                $line = new Line('5y5hRLWkK3qqd4iKgkU1fODQXStIUySXoaiSlFdAyek');
                 $body = $ntfy->body ? '
 ' . $ntfy->body : '';
                 $passenger = $ntfy->passenger ? '
