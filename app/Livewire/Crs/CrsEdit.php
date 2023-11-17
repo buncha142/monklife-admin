@@ -5,12 +5,15 @@ namespace App\Livewire\Crs;
 use App\Models\CRS\Lists;
 use App\Models;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class CrsEdit extends Component
 {
+    use LivewireAlert;
+
     public $cars;
     public $dirvers;
     public $users;
@@ -92,9 +95,12 @@ class CrsEdit extends Component
     public function store()
     {
          Lists::find($this->dataId)->update($this->all());
-         Toaster::warning('แก้ไขรายการเรียบร้อย !');
-         return redirect()->route('crs-lists');
          $this->reset();
+         $this->alert('warning', 'แก้ไขรายการเรียบร้อย !',[
+            'timer' => 10000,
+            'toast' => true,
+           ]);
+         return redirect()->route('crs-lists');
     }
 
     public function render()

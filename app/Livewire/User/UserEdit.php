@@ -8,11 +8,13 @@ use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class UserEdit extends Component
 {
     use WithFileUploads;
+    use LivewireAlert;
 
     public $photo;
     public $status;
@@ -110,7 +112,10 @@ class UserEdit extends Component
             'avatar' => $this->avatar,
         ]);
 
-        Toaster::warning('แก้ไขเรียบร้อย !');
+        $this->alert('warning', 'แก้ไขรายการเรียบร้อย !',[
+            'timer' => 3000,
+            'closeButton' => true,
+           ]);
 
     }
 }

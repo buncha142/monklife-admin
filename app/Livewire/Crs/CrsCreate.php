@@ -3,19 +3,22 @@
 namespace App\Livewire\Crs;
 
 use App\Models;
-use App\Models\CRS\Lists;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Rule;
+use App\Models\CRS\Car;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
-
+use Carbon\CarbonPeriod;
+use App\Models\CRS\Lists;
+use Livewire\Attributes\On;
 use function Livewire\store;
+use Livewire\Attributes\Rule;
+use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CrsCreate extends Component
 {
+    use LivewireAlert;
     public $cars;
     public $dirvers;
     public $users = [];
@@ -72,7 +75,7 @@ class CrsCreate extends Component
     {
         $this->validate();
         $checks = Lists::whereDate('start_date', '=', $this->start_date)->get();
-        if (count($checks)!=0) {
+        if (count($checks) != 0) {
             $this->dispatch(
                 "openModal",
                 component: "crs.crs-modal-create",
@@ -80,8 +83,8 @@ class CrsCreate extends Component
                     'start_date' => $this->start_date,
                     'start_time' => $this->start_time,
                     'end_time' => $this->end_time,
-                ]);
-
+                ]
+            );
         } else {
             $this->store();
         }
@@ -89,10 +92,13 @@ class CrsCreate extends Component
 
     public function store()
     {
-         Lists::create($this->all());
-         Toaster::success('เพิ่มรายการเรียบร้อย !');
-         return redirect()->route('crs-lists');
-         $this->reset();
+        Lists::create($this->all());
+         $this->alert('success', 'เพิ่มรายการเรียบร้อย !',[
+             'timer' => 10000,
+             'toast' => true,
+            ]);
+        $this->reset();
+        return redirect()->route('crs-lists');
     }
 
 

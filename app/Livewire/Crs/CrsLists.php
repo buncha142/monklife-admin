@@ -4,11 +4,14 @@ namespace App\Livewire\Crs;
 
 use App\Models\CRS\Lists;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class CrsLists extends Component
 {
+    use LivewireAlert;
+
     public function render()
     {
         return view('livewire.crs.crs-lists',
@@ -20,6 +23,10 @@ class CrsLists extends Component
     public function delete($id)
         {
             Lists::findOrFail($id)->delete();
-            Toaster::error('ลบเรียบร้อย !');
+            $this->alert('error', 'ลบรายการเรียบร้อย !',[
+                'timer' => 3000,
+                'closeButton' => true,
+               ]);
+
         }
 }

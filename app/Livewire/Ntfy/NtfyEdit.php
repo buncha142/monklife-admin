@@ -5,6 +5,7 @@ namespace App\Livewire\Ntfy;
 use Livewire\Component;
 use App\Models;
 use Illuminate\Support\Facades;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Rule;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Masmerise\Toaster\Toaster;
@@ -12,6 +13,7 @@ use Masmerise\Toaster\Toaster;
 class NtfyEdit extends Component
 {
     use WithFileUploads;
+    use LivewireAlert;
 
     public $dataId;
     public $user_id;
@@ -61,9 +63,12 @@ class NtfyEdit extends Component
             $this->image = $this->photo;
         }
         Models\NTFY\Ntfy::find($this->dataId)->update($this->all());
-        Toaster::warning('แก้ไขรายการเรียบร้อย !');
-        return redirect()->route('ntfy-lists');
         $this->reset();
+        $this->alert('warning', 'แก้ไขรายการเรียบร้อย !',[
+            'timer' => 3000,
+            'closeButton' => true,
+           ]);
+        return redirect()->route('ntfy-lists');
     }
 
     public function render()

@@ -5,6 +5,7 @@ namespace App\Livewire\Ntfy;
 use App\Models\NTFY\Ntfy;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Phattarachai\LineNotify\Line;
@@ -12,6 +13,7 @@ use Phattarachai\LineNotify\Line;
 
 class NtfyLists extends Component
 {
+    use LivewireAlert;
     public function render()
     {
         return view(
@@ -25,7 +27,10 @@ class NtfyLists extends Component
     public function delete($id)
     {
         Ntfy::findOrFail($id)->delete();
-        Toaster::error('ลบเรียบร้อย !');
+        $this->alert('error', 'ลบรายการเรียบร้อย !',[
+            'timer' => 3000,
+            'closeButton' => true,
+           ]);
     }
 
     public function line($id)

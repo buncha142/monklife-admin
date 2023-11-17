@@ -8,10 +8,11 @@ use Masmerise\Toaster\Toaster;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class UserEditPassword extends Component
 {
-
+    use LivewireAlert;
     public $photo;
     public $name;
     public $surname;
@@ -51,7 +52,10 @@ class UserEditPassword extends Component
             'password' => Hash::make($this->password),
         ]);
 
-        Toaster::warning('แก้ไขเรียบร้อย !');
+        $this->alert('warning', 'แก้ไขรายการเรียบร้อย !',[
+            'timer' => 3000,
+            'closeButton' => true,
+           ]);
 
     }
 }

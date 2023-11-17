@@ -7,12 +7,14 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 
 class NtfyCreate extends Component
 {
     use WithFileUploads;
+    use LivewireAlert;
 
     public $user_id;
     public $users = [];
@@ -52,8 +54,11 @@ class NtfyCreate extends Component
             $this->image = $this->image->store('ntfy-image');
         }
         Models\NTFY\Ntfy::create($this->all());
-        Toaster::success('เพิ่มรายการเรียบร้อย !');
         $this->reset();
+        $this->alert('success', 'เพิ่มรายการเรียบร้อย !',[
+            'timer' => 3000,
+            'closeButton' => true,
+           ]);
         return redirect()->route('ntfy-lists');
     }
 

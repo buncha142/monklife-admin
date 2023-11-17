@@ -5,6 +5,9 @@ import typography from '@tailwindcss/typography';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
+        "./app/Filament/**/*.php",
+        "./resources/views/filament/**/*.blade.php",
+        "./resources/**/*.blade.php",
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
@@ -13,9 +16,22 @@ export default {
         './resources/**/*.js',
         './resources/**/*.vue',
         './node_modules/flowbite/**/*.js',
-        './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
     ],
-
+    safelist: [
+        'sm:max-w-sm',
+        'sm:max-w-md',
+        'sm:max-w-2xl',
+        'md:max-w-lg',
+        'md:max-w-xl',
+        'xl:max-w-4xl',
+        'xl:max-w-5xl',
+        '2xl:max-w-6xl',
+        '2xl:max-w-7xl',
+        '3xl:max-w-8xl',
+        '3xl:max-w-8xl',
+        '4xl:max-w-10xl',
+        '4xl:max-w-11xl',
+    ],
     theme: {
         extend: {
             fontFamily: {

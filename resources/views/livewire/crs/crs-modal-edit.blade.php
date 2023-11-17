@@ -16,9 +16,13 @@
             </div>
         </x-slot>
         <x-slot name="buttons" >
-            <button type="button" wire:click="$dispatch('closeModal')" class="focus:outline-none w-full text-blue-800 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-2 ">แก้ไข</button>
-            <button type="button" wire:click="$dispatchTo('crs.crs-edit', 'store')"
-               class="text-white bg-blue-700 w-full hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-2  focus:outline-none ">ยืนยัน</button>
+            <button type="button"  wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:click="$dispatch('closeModal')" class="focus:outline-none w-full text-blue-800 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-2 ">
+                {{ __('แก้ไข') }}
+            </button>
+            <button type="button"  wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:click="$dispatchTo('crs.crs-edit', 'store')"
+               class="text-white bg-blue-700 w-full hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 mr-2 mb-2  focus:outline-none ">
+               {{ __('ยืนยัน') }}
+            </button>
         </x-slot>
     </x-modal-wire-elements>
 </div>
