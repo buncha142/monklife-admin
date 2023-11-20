@@ -61,9 +61,7 @@
                             {{ $bookcar->description }}
                         </p>
                         <div class=" flex flex-inline space-x-3 mt-2">
-                            @if (
-                                $bookcar->user_id == Auth()->user()->id ||
-                                    Auth()->user()->role('Admin'))
+                            @if ( $bookcar->user_id == Auth()->user()->id || Auth()->user()->hasRole('Admin'))
                                 <x-icon-edit href="{{ route('crs-edit', $bookcar->id) }}" />
                                 <x-icon-delete wire:click="delete({{ $bookcar->id }})"
                                     class="font-medium ml-2 text-red-600 cursor-pointer"
