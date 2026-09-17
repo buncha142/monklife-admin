@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\CRS\Car;
-use App\Models\CRS\Diver;
+use App\Models\CRS\Driver;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignIdFor(Car::class);
-            $table->foreignIdFor(Diver::class);
+            $table->foreignIdFor(Driver::class);
             $table->foreignIdFor(User::class);
             $table->string('passenger')->nullable();
             $table->boolean('travel')->default(0);
