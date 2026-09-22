@@ -70,10 +70,10 @@
     <x-livewire-alert::scripts />
 
     <!-- Show password -->
-    <script src="/js/show-password.js"></script>
+    <script src="/js/show-password.js?v={{ filemtime(public_path('js/show-password.js')) }}"></script>
 
     <!-- clock.js -->
-    <script src="/js/clock.js"></script>
+    <script src="/js/clock.js?v={{ filemtime(public_path('js/clock.js')) }}"></script>
 
     @stack('modals')
 
