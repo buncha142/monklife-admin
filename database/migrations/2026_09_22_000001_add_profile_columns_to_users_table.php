@@ -8,29 +8,37 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * เพิ่มเฉพาะคอลัมน์ที่ยังไม่มี — ฐานข้อมูลบน server เดิมมีคอลัมน์เหล่านี้อยู่แล้ว (เพิ่มนอก migration)
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('status')->nullable()->after('id');
-            $table->string('surname')->nullable()->after('name');
-            $table->string('nickname')->nullable()->after('surname');
-            $table->string('phone', 20)->nullable()->after('nickname');
-            $table->string('line_id')->nullable()->after('phone');
-            $table->date('dob')->nullable()->after('line_id');
-            $table->date('doo')->nullable()->after('dob');
-            $table->boolean('active')->default(true)->after('password');
-            $table->string('avatar')->nullable()->after('active');
-        });
+        $columns = [
+            'status' => fn (Blueprint $table) => $table->string('status')->nullable()->after('id'),
+            'surname' => fn (Blueprint $table) => $table->string('surname')->nullable()->after('name'),
+            'nickname' => fn (Blueprint $table) => $table->string('nickname')->nullable()->after('surname'),
+            'phone' => fn (Blueprint $table) => $table->string('phone', 20)->nullable()->after('nickname'),
+            'line_id' => fn (Blueprint $table) => $table->string('line_id')->nullable()->after('phone'),
+            'dob' => fn (Blueprint $table) => $table->date('dob')->nullable()->after('line_id'),
+            'doo' => fn (Blueprint $table) => $table->date('doo')->nullable()->after('dob'),
+            'active' => fn (Blueprint $table) => $table->boolean('active')->default(true)->after('password'),
+            'avatar' => fn (Blueprint $table) => $table->string('avatar')->nullable()->after('active'),
+        ];
+
+        foreach ($columns as $column => $define) {
+            if (! Schema::hasColumn('users', $column)) {
+                Schema::table('users', $define);
+            }
+        }
     }
 
     /**
      * Reverse the migrations.
+     *
+     * ไม่ลบคอลัมน์ — บน server เดิมคอลัมน์เหล่านี้มีข้อมูลจริงอยู่ก่อน migration นี้
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['status', 'surname', 'nickname', 'phone', 'line_id', 'dob', 'doo', 'active', 'avatar']);
-        });
+        //
     }
 };
