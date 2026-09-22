@@ -1,11 +1,15 @@
 {
     "mcpServers": {
         "laravel-boost": {
-            "command": "/Users/miniboxmacmini/Library/Application Support/Herd/bin/php82",
+            "command": "/Users/bunchapomsuwun/Library/Application Support/Herd/bin/php82",
             "args": [
                 "artisan",
                 "boost:mcp"
             ]
+        },
+        "context7": {
+            "type": "http",
+            "url": "https://mcp.context7.com/mcp"
         }
     }
 }
