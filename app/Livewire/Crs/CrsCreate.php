@@ -92,7 +92,7 @@ class CrsCreate extends Component
 
     public function store()
     {
-        Lists::create($this->all());
+        Lists::create($this->only((new Lists)->getFillable()));
          $this->alert('success', 'เพิ่มรายการเรียบร้อย !',[
              'timer' => 10000,
              'toast' => true,
