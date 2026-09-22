@@ -2,97 +2,34 @@
 
 namespace App\Livewire\Crs;
 
-use App\Models;
-use Carbon\Carbon;
-use App\Models\CRS\Car;
-use Livewire\Component;
-use Carbon\CarbonPeriod;
+use App\Livewire\Crs\Concerns\WithBookingForm;
 use App\Models\CRS\Lists;
-use Livewire\Attributes\On;
-use function Livewire\store;
-use Livewire\Attributes\Rule;
-use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Facades\Auth;
-use Filament\Notifications\Notification;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class CrsCreate extends Component
 {
     use LivewireAlert;
-    public $cars;
-    public $dirvers;
-    public $users = [];
-    public $passenger = [];
-
-    #[Rule('required|max:255')]
-    public $name;
-
-    #[Rule('required|date|after:yesterday')]
-    public $start_date;
-
-    #[Rule('required')]
-    public $start_time;
-
-    #[Rule('nullable|date|after:start_date')]
-    public $end_date;
-
-    #[Rule('required|after:start_time')]
-    public $end_time;
-
-    public $car_id;
-    public $driver_id;
-    public $user_id;
-
-    #[Rule('required')]
-    public $description;
-    public $travel = 0;
+    use WithBookingForm;
 
     protected $listeners = ['store'];
 
-    protected $messages = [
-        'name.required' => 'กรุณาป้อนข้อมูล',
-        'name.max:255' => 'กรุณาป้อนข้อมูลมากเกินไป',
-        'start_date.required' => 'กรุณาป้อนข้อมูล',
-        'start_date.date' => 'กรุณาป้อนข้อมูลเป็นรูปแบบวันที่',
-        'start_date.after' => 'เลือกเฉพาะวันนี้เป็นต้นไป กรุณาเลือกใหม่',
-        'start_time.required' => 'กรุณาป้อนข้อมูล',
-        'end_date.date' => 'กรุณาป้อนข้อมูลเป็นรูปแบบวันที่',
-        'end_date.after' => 'เลือกเฉพาะวันนี้เป็นต้นไป กรุณาเลือกใหม่',
-        'end_time.required' => 'กรุณาป้อนข้อมูล',
-        'end_time.after' => 'ป้อนเวลาหลังจากเวลาออกเดินทาง กรุณาป้อนเวลาใหม่',
-        'description.required' => 'กรุณาป้อนข้อมูล',
-    ];
-
     public function mount()
     {
-        $this->cars = Models\CRS\Car::actived()->get();
-        $this->dirvers = Models\CRS\Driver::actived()->get();
-        $this->users = Models\User::actived()->orderBy('doo', 'asc')->get();
-        $this->user_id = Auth::user()->id;
-        $this->car_id = Models\CRS\Car::actived()->pluck('id')->first();
-        $this->driver_id = Models\CRS\Driver::actived()->pluck('id')->first();
+        $this->loadOptions();
+        $this->user_id = Auth::id();
+        $this->car_id = $this->cars->first()?->id;
+        $this->driver_id = $this->dirvers->first()?->id;
         $this->start_date = today()->format('Y-m-d');
         $this->passenger = array_filter([Auth::user()->nickname]);
     }
 
-    // เปลี่ยนผู้จอง (Admin) → แทนชื่อผู้จองเดิมในผู้โดยสารด้วยผู้จองใหม่
-    public function updatingUserId($value)
-    {
-        $old = $this->users->firstWhere('id', $this->user_id)?->nickname;
-        $new = $this->users->firstWhere('id', $value)?->nickname;
-
-        $this->passenger = array_values(array_unique(array_filter([
-            ...array_diff($this->passenger, [$old]),
-            $new,
-        ])));
-    }
-
-
     public function save()
     {
         $this->validate();
-        $checks = Lists::whereDate('start_date', '=', $this->start_date)->get();
-        if (count($checks) != 0) {
+
+        if (Lists::whereDate('start_date', $this->start_date)->exists()) {
             $this->dispatch(
                 "openModal",
                 component: "crs.crs-modal-create",
@@ -109,15 +46,13 @@ class CrsCreate extends Component
 
     public function store()
     {
-        Lists::create($this->only((new Lists)->getFillable()));
-         $this->alert('success', 'เพิ่มรายการเรียบร้อย !',[
-             'timer' => 10000,
-             'toast' => true,
-            ]);
-        $this->reset();
-        return redirect()->route('crs-lists');
+        $this->validate();
+        Lists::create($this->bookingData());
+        return $this->flash('success', 'เพิ่มรายการเรียบร้อย !', [
+            'timer' => 10000,
+            'toast' => true,
+        ], route('crs-lists'));
     }
-
 
     public function render()
     {

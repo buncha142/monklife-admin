@@ -3,10 +3,9 @@
 namespace App\Livewire\Crs;
 
 use App\Models\CRS\Lists;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
 
 class CrsLists extends Component
 {
@@ -14,19 +13,24 @@ class CrsLists extends Component
 
     public function render()
     {
-        return view('livewire.crs.crs-lists',
-        [
-            'bookcars' => Lists::whereDate('start_date', '>=', Carbon::today()->toDateString())->orderBy('start_date', 'ASC')->orderBy('start_time', 'ASC')->get(),
+        return view('livewire.crs.crs-lists', [
+            'bookcars' => Lists::with(['car', 'driver.user', 'user'])
+                ->whereDate('start_date', '>=', today())
+                ->orderBy('start_date')
+                ->orderBy('start_time')
+                ->get(),
         ]);
     }
 
     public function delete($id)
-        {
-            Lists::findOrFail($id)->delete();
-            $this->alert('error', 'ลบรายการเรียบร้อย !',[
-                'timer' => 3000,
-                'closeButton' => true,
-               ]);
+    {
+        $list = Lists::findOrFail($id);
+        abort_unless($list->user_id == Auth::id() || Auth::user()->hasRole('Admin'), 403);
 
-        }
+        $list->delete();
+        $this->alert('error', 'ลบรายการเรียบร้อย !', [
+            'timer' => 3000,
+            'closeButton' => true,
+        ]);
+    }
 }
