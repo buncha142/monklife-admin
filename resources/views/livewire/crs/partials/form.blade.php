@@ -98,24 +98,58 @@
                 <x-input id="start_date" class="form-input block mt-1 w-full" type="date" wire:model="start_date" />
                 <x-input-error-default for="start_date" />
             </div>
-            <!-- เวลาไป -->
-            <div>
-                <x-label for="start_time" :value="__('เวลาเดินทาง')" />
-                <x-input id="start_time" class="form-input block mt-1 w-full" type="time" wire:model="start_time" />
-                <x-input-error-default for="start_time" />
-            </div>
             <!-- วันที่กลับ -->
             <div class="{{ $travel == 0 ? 'hidden' : '' }}">
                 <x-label for="end_date" :value="__('วันกลับ')" />
                 <x-input id="end_date" class="form-input block mt-1 w-full" type="date" wire:model="end_date" />
                 <x-input-error-default for="end_date" />
             </div>
-            <!-- เวลากลับ -->
-            <div>
-                <x-label for="end_time" :value="__('เวลากลับ')" />
-                <x-input id="end_time" class="form-input block mt-1 w-full" type="time" wire:model="end_time" />
-                <x-input-error-default for="end_time" />
+        </div>
+        @php
+            $chip = 'px-3 py-1 text-sm rounded-full border transition disabled:opacity-40';
+            $chipOff = 'bg-gray-50 border-gray-300 text-gray-800 hover:bg-gray-200';
+            $chipOn = 'bg-blue-800 border-blue-800 text-white';
+        @endphp
+        <!-- เวลาไป: ปุ่มลัด + ตัวเลือกทุก 30 นาที -->
+        <div class="mt-2">
+            <x-label for="start_time" :value="__('เวลาเดินทาง')" />
+            <div class="flex flex-wrap gap-1 mt-1">
+                @foreach ($this->startPresets() as $time)
+                    <button type="button" wire:key="start-{{ $time }}" wire:click="$set('start_time', '{{ $time }}')"
+                        class="{{ $chip }} {{ $start_time === $time ? $chipOn : $chipOff }}">{{ $time }}</button>
+                @endforeach
             </div>
+            <x-select id="start_time" class="form-select block mt-1 w-full" wire:model.live="start_time">
+                <option value="">-- เลือกเวลา --</option>
+                @foreach ($this->timeSlots() as $time)
+                    <option wire:key="start-slot-{{ $time }}" value="{{ $time }}">{{ $time }} น.</option>
+                @endforeach
+            </x-select>
+            <x-input-error-default for="start_time" />
+        </div>
+        <!-- เวลากลับ: ไป-กลับ = +N ชม. จากเวลาไป, ค้างคืน = เวลาคงที่ -->
+        <div class="mt-2">
+            <x-label for="end_time" :value="__('เวลากลับ')" />
+            <div class="flex flex-wrap gap-1 mt-1">
+                @if ($travel == 0)
+                    @foreach ($this->durationPresets() as $minutes => $label)
+                        <button type="button" wire:key="duration-{{ $minutes }}" wire:click="setDuration({{ $minutes }})"
+                            @disabled(!$start_time) class="{{ $chip }} {{ $chipOff }}">{{ $label }}</button>
+                    @endforeach
+                @else
+                    @foreach ($this->endPresets() as $time)
+                        <button type="button" wire:key="end-{{ $time }}" wire:click="$set('end_time', '{{ $time }}')"
+                            class="{{ $chip }} {{ $end_time === $time ? $chipOn : $chipOff }}">{{ $time }}</button>
+                    @endforeach
+                @endif
+            </div>
+            <x-select id="end_time" class="form-select block mt-1 w-full" wire:model.live="end_time">
+                <option value="">-- เลือกเวลา --</option>
+                @foreach ($this->timeSlots() as $time)
+                    <option wire:key="end-slot-{{ $time }}" value="{{ $time }}">{{ $time }} น.</option>
+                @endforeach
+            </x-select>
+            <x-input-error-default for="end_time" />
         </div>
         <!-- รายละเอียดเพิ่มเติม -->
         <div class="mt-2">

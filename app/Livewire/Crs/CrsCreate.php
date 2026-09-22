@@ -22,6 +22,7 @@ class CrsCreate extends Component
         $this->car_id = $this->cars->first()?->id;
         $this->driver_id = $this->dirvers->first()?->id;
         $this->start_date = today()->format('Y-m-d');
+        $this->start_time = '08:00';
         $this->passenger = array_filter([Auth::user()->nickname]);
     }
 
