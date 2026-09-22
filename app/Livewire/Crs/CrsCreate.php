@@ -42,6 +42,8 @@ class CrsCreate extends Component
     public $car_id;
     public $driver_id;
     public $user_id;
+
+    #[Rule('required')]
     public $description;
     public $travel = 0;
 
@@ -58,6 +60,7 @@ class CrsCreate extends Component
         'end_date.after' => 'เลือกเฉพาะวันนี้เป็นต้นไป กรุณาเลือกใหม่',
         'end_time.required' => 'กรุณาป้อนข้อมูล',
         'end_time.after' => 'ป้อนเวลาหลังจากเวลาออกเดินทาง กรุณาป้อนเวลาใหม่',
+        'description.required' => 'กรุณาป้อนข้อมูล',
     ];
 
     public function mount()
@@ -68,6 +71,20 @@ class CrsCreate extends Component
         $this->user_id = Auth::user()->id;
         $this->car_id = Models\CRS\Car::actived()->pluck('id')->first();
         $this->driver_id = Models\CRS\Driver::actived()->pluck('id')->first();
+        $this->start_date = today()->format('Y-m-d');
+        $this->passenger = array_filter([Auth::user()->nickname]);
+    }
+
+    // เปลี่ยนผู้จอง (Admin) → แทนชื่อผู้จองเดิมในผู้โดยสารด้วยผู้จองใหม่
+    public function updatingUserId($value)
+    {
+        $old = $this->users->firstWhere('id', $this->user_id)?->nickname;
+        $new = $this->users->firstWhere('id', $value)?->nickname;
+
+        $this->passenger = array_values(array_unique(array_filter([
+            ...array_diff($this->passenger, [$old]),
+            $new,
+        ])));
     }
 
 

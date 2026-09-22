@@ -46,7 +46,7 @@
                     <!-- ผู้จอง -->
                     <div class="mt-2">
                         <x-label for="user_id" :value="__('ผู้จอง')" />
-                        <x-select class="form-select block mt-1 w-full" type="text" wire:model="user_id" autofocus>
+                        <x-select class="form-select block mt-1 w-full" type="text" wire:model.live="user_id" autofocus>
                             @foreach ($users as $user)
                                 <option  wire:key="{{ $user->id }}" value="{{ $user->id }}">{{ $user->nickname }}</option>
                             @endforeach
