@@ -10,6 +10,7 @@ export default {
         "./resources/**/*.blade.php",
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',
+        './vendor/wire-elements/modal/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/**/*.blade.php',

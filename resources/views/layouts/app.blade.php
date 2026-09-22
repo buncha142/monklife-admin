@@ -40,11 +40,6 @@
     <!-- Styles -->
     @livewireStyles
 
-    <!-- Styles wire-elements/modal -->
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Scripts wire-elements/modal -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
 </head>
 
 <body onload="startTime()">
@@ -73,12 +68,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <x-livewire-alert::scripts />
-
-    <!-- flowbite -->
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-
-    <!-- flowbite -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 
     <!-- Show password -->
     <script src="/js/show-password.js"></script>
